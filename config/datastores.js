@@ -46,13 +46,15 @@ module.exports.datastores = {
      *                                                                          *
      ***************************************************************************/
 
-  finanzaspersonalesdb: {
-    adapter: 'sails-mysql',
-    url: "mysql://finanzasPersonalesAdmin:123456789@localhost:3306/finanzas_personales",
-    timezone: '+0',
-  }
-
-
+    finanzaspersonalesdb: {
+      adapter: "sails-mysql",
+      url: "mysql://finanzasPersonalesAdmin:123456789@localhost:3306/finanzas_personales",
+      timezone: "+0",
     },
-
+  },
+  finanzaspersonalesdb: {
+    adapter: "sails-mysql",
+    url: "mysql://finanzasPersonalesAdmin:123456789@localhost:3306/finanzas_personales",
+    timezone: "+0",
+  },
 };

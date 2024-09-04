@@ -1,37 +1,42 @@
-/**
- * Route Mappings
- * (sails.config.routes)
- *
- * Your routes tell Sails what to do each time it receives a request.
- *
- * For more information on configuring custom routes, check out:
- * https://sailsjs.com/anatomy/config/routes-js
- */
+var blueprintConfig = require("./blueprints");
 
-module.exports.routes = {
+var ROUTE_PREFIX = blueprintConfig.blueprints.prefix || "";
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` your home page.            *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+function addGlobalPrefix(routes) {
+  var paths = Object.keys(routes);
+  var newRoutes = {};
 
-  '/': { view: 'pages/homepage' },
+  if (ROUTE_PREFIX === "") {
+    return routes;
+  }
 
+  paths.forEach((path) => {
+    var pathParts = path.split(" ");
+    var uri = pathParts.pop();
+    var prefixedURI = "";
+    var newPath = "";
 
-  /***************************************************************************
-  *                                                                          *
-  * More custom routes here...                                               *
-  * (See https://sailsjs.com/config/routes for examples.)                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the routes in this file, it   *
-  * is matched against "shadow routes" (e.g. blueprint routes).  If it does  *
-  * not match any of those, it is matched against static assets.             *
-  *                                                                          *
-  ***************************************************************************/
+    prefixedURI = ROUTE_PREFIX + uri;
 
+    pathParts.push(prefixedURI);
 
-};
+    newPath = pathParts.join(" ");
+    // construct the new routes
+    newRoutes[newPath] = routes[path];
+  });
+
+  return newRoutes;
+}
+
+module.exports.routes = addGlobalPrefix({
+  /*
+   * Rutas para las acciones de autenticación
+   *
+   *//*
+  "POST /login": { action: "auth/loginController" }, */
+  "POST /login": { controller: "auth", action: "login" },
+
+/*   'GET /egresos': { action: 'gestion-egresos/listar-egresos' }, */
+  /* 'DELETE /egresos/eliminar': { action: 'gestion-egresos/eliminar-egresos'}, */
+/*   'PUT /productos/actualizar': { action: 'gestion-productos/editar-producto' }, */
+});
