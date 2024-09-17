@@ -1,7 +1,7 @@
 const joi = require("joi");
 
 module.exports = async function (req, res, proceed) {
-  console.log("Polici para valid parametros")
+  console.log("Polici para validar parametros")
   const schema = joi.object({
     usuario: joi.string().required(),
     password: joi.string().required(),

@@ -32,11 +32,13 @@ module.exports.routes = addGlobalPrefix({
   /*
    * Rutas para las acciones de autenticación
    *
-   *//*
+   */ /*
   "POST /login": { action: "auth/loginController" }, */
   "POST /login": { controller: "auth", action: "login" },
+  "POST /signup": { controller: "auth", action: "sign-up" },
+  "GET /fetch": { controller: "auth", action: "fetch" },
 
-/*   'GET /egresos': { action: 'gestion-egresos/listar-egresos' }, */
+  /*   'GET /egresos': { action: 'gestion-egresos/listar-egresos' }, */
   /* 'DELETE /egresos/eliminar': { action: 'gestion-egresos/eliminar-egresos'}, */
-/*   'PUT /productos/actualizar': { action: 'gestion-productos/editar-producto' }, */
+  /*   'PUT /productos/actualizar': { action: 'gestion-productos/editar-producto' }, */
 });

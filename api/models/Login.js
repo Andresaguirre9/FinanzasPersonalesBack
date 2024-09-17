@@ -6,27 +6,27 @@
  */
 
 module.exports = {
-  datastore: 'finanzaspersonalesdb',
+  datastore: "finanzaspersonalesdb",
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     password: {
-      type: 'string',
+      type: "string",
       protect: true,
       required: true,
-      description: 'Representación hash de la clase de un identificacion.',
-      example: '2$28a8eabna301089103-13948134nad',
+      description: "Representación hash de la clase de un identificacion.",
+      example: "2$28a8eabna301089103-13948134nad",
     },
     usuario: {
-      type: 'string',
+      type: "string",
       unique: true,
       isEmail: true,
       maxLength: 80,
       required: true,
-      example: 'mary.escobar@example.com',
-      extendedDescription: 'Email ',
+      example: "mary.escobar@example.com",
+      extendedDescription: "Email ",
     },
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -36,8 +36,8 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
   },
+
   customToJSON: function () {
-    return _.omit(this, [
-    ]);
+    return _.omit(this, ['password']);
   },
 };
