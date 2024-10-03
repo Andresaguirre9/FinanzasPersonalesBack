@@ -28,6 +28,19 @@ module.exports = {
       example: "mary.escobar@example.com",
       extendedDescription: "Email ",
     },
+    passwordResetToken: {
+      type: "string",
+      description:
+        "Un token único utilizado para verificar que el identificacion es quién esta recuperando la contraseña. Expira despues de un (1) uso o despues de que pasa un tiempo.",
+      allowNull: true,
+    },
+    passwordResetTokenExpiresAt: {
+      type: "number",
+      description:
+        "Un JS timestamp representa el momento que passwordResetToken expira o 0 si el identificacion no solito el token.",
+      example: 1502844074211,
+      allowNull: true,
+    },
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
@@ -38,6 +51,10 @@ module.exports = {
   },
 
   customToJSON: function () {
-    return _.omit(this, ['password']);
+    return _.omit(this, [
+      "password",
+      "passwordResetToken",
+      "passwordResetTokenExpiresAt",
+    ]);
   },
 };

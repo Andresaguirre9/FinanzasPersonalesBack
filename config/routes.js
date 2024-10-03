@@ -37,6 +37,8 @@ module.exports.routes = addGlobalPrefix({
   "POST /login": { controller: "auth", action: "login" },
   "POST /signup": { controller: "auth", action: "sign-up" },
   "GET /fetch": { controller: "auth", action: "fetch" },
+  "POST /password/forgot": { controller: "auth", action: "forgot" },
+  "POST /password/reset": { controller: "auth", action: "update" },
 
   /*   'GET /egresos': { action: 'gestion-egresos/listar-egresos' }, */
   /* 'DELETE /egresos/eliminar': { action: 'gestion-egresos/eliminar-egresos'}, */

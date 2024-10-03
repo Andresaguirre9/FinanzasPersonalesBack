@@ -12,6 +12,7 @@
     "grunt": "1.0.4",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.15",
     "sails": "^1.5.11",
     "sails-hook-grunt": "^5.0.0",
     "sails-hook-organics": "^2.2.3",
