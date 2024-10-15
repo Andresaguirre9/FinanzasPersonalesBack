@@ -1,5 +1,5 @@
 module.exports = {
-  friendlyName: 'listar cuentas',
+  friendlyName: 'listar bancos',
 
   description: '',
 
@@ -20,31 +20,33 @@ module.exports = {
   },
 
   fn: async function ({ pagination }) {
-    sails.log.verbose('-----> Listar cuentas');
-    sails.log.verbose('Paginacion', pagination);
+    sails.log.verbose('-----> Listar bancos');
 
     try {
 
-      const cuentas = await sails.helpers.gestionCuentas.listarCuentas.with({
+      //TODO posible validacion para el manejo de rol de administrador
+
+      const bancos = await sails.helpers.gestionBancos.listarBancos.with({
         pagination: pagination,
-        idLogin: this.req.decoded.sub.id
       });
+
+
       return {
         ejecucion: {
           respuesta: {
             estado: "OK",
-            message: cuentas.ejecucion.mensaje,
+            message: bancos.ejecucion.mensaje,
           },
           datos: {
-            pagination: cuentas.ejecucion.datos.pagination,
+            pagination: bancos.ejecucion.datos.pagination,
             records: {
-              data: cuentas.ejecucion.datos.records.data,
+              data: bancos.ejecucion.datos.records.data,
             },
           },
         },
       };
     } catch (error) {
-      sails.log.error('cuentas', error);
+      sails.log.error('bancos', error);
       return {
         ejecucion: {
           respuesta: {

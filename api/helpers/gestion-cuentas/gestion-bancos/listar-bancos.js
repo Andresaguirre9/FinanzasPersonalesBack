@@ -1,5 +1,5 @@
 module.exports = {
-  friendlyName: 'listar Cuentas',
+  friendlyName: 'listar Bancos',
 
   description: '',
 
@@ -10,20 +10,13 @@ module.exports = {
       type: 'ref',
       required: true,
     },
-
-    idLogin: {
-      description: 'id de usuario',
-      example: 0,
-      type: 'number',
-      required: true,
-    },
   },
 
   exits: {
   },
 
-  fn: async function ({ pagination, idLogin }) {
-    sails.log.verbose('-----> Helper Listar Cuentas');
+  fn: async function ({ pagination }) {
+    sails.log.verbose('-----> Helper Listar Bancos');
     sails.log.verbose('Paginacion', pagination);
 
     try {
@@ -33,6 +26,7 @@ module.exports = {
       let limite = +pagination.limite;
       let sort = {};
       if (sortBy) {
+        sails.log.verbose('con sortBy', sortBy);
         sort[sortBy] = descending === 'true' ? 'DESC' : 'ASC';
         filtroSortBy = [sort];
       } else {
@@ -40,7 +34,6 @@ module.exports = {
       }
 
       let filtroWhere = {
-        id_login: idLogin
       };
 
       let queryCount = {
@@ -53,26 +46,26 @@ module.exports = {
         limit: limite,
         sort: filtroSortBy,
       };
-      pagination.rowsNumber = await Cuentas.count(queryCount);
+      pagination.rowsNumber = await Bancos.count(queryCount);
 
-      const cuentas = await Cuentas.find(queryTabla).populate('id_banco');
+      const bancos = await Bancos.find(queryTabla);
 
       return {
         ejecucion: {
           respuesta: {
             estado: "OK",
-            message: 'Las cuentas se listaron con exito',
+            message: 'Los bancos se listaron con exito',
           },
           datos: {
             pagination: pagination,
             records: {
-              data: cuentas,
+              data: bancos,
             },
           },
         },
       };
     } catch (error) {
-      sails.log.error('cuentas', error);
+      sails.log.error('bancos', error);
       return {
         ejecucion: {
           respuesta: {
