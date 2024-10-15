@@ -1,11 +1,11 @@
 module.exports = {
-  friendlyName: 'Consultar cuenta',
+  friendlyName: "Consultar cuenta",
 
-  description: 'Consultar una cuenta en la BD',
+  description: "Consultar una cuenta en la BD",
 
   inputs: {
     idCuenta: {
-      type: 'number',
+      type: "number",
       required: true,
     },
   },
@@ -13,34 +13,34 @@ module.exports = {
   exits: {},
 
   fn: async function ({ idCuenta }) {
-    sails.log.verbose('-----> Consultar cuenta');
+    sails.log.verbose("-----> Consultar cuenta");
 
     try {
+      const usuarioLogueado = this.req.decoded.sub.id;
 
-      const usuarioLogueado = this.req.decoded.sub.id
+      const cuentaConsultada =
+        await sails.helpers.gestionCuentas.consultarCuenta.with({
+          idCuenta: idCuenta,
+          idLogin: usuarioLogueado,
+        });
 
-      const cuentaConsultada = await sails.helpers.gestionCuentas.ConsultarCuenta.with({
-        idCuenta: idCuenta,
-        idLogin: usuarioLogueado
-      })
-
-      sails.log.verbose('Cuenta encontrada en la BD', cuentaConsultada);
-
+      sails.log.verbose("Cuenta encontrada en la BD", cuentaConsultada);
+      const cuenta = cuentaConsultada.ejecucion.datos.cuentaConsultada;
       return {
         ejecucion: {
           respuesta: {
-            estado: 'OK',
-            message: 'La cuenta se encontro con exito',
+            estado: "OK",
+            message: "La cuenta se encontro con exito",
           },
-          datos: { cuentaConsultada },
+          datos: { cuenta },
         },
       };
     } catch (error) {
-      sails.log.error('cuentas', error);
+      sails.log.error("cuentas", error);
       return {
         ejecucion: {
           respuesta: {
-            estado: 'NOK',
+            estado: "NOK",
             message: error.message,
           },
           datos: {},

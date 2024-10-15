@@ -12,8 +12,11 @@ module.exports = {
     sails.log.verbose('-----> Cargar bancos');
 
     try {
-      const bancos = await Bancos.find();
-
+      let bancos = await Bancos.find();
+      bancos = bancos.map(banco =>({
+        label: banco.nombre,
+        value: banco.id
+      }))
       sails.log.verbose('Lista de bancos en la BD', bancos);
 
       return {
