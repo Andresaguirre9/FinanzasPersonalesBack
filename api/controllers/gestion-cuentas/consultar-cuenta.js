@@ -19,9 +19,9 @@ module.exports = {
 
       const usuarioLogueado = this.req.decoded.sub.id
 
-      const cuentaConsultada = await Cuentas.findOne({
-        id_login: usuarioLogueado,
-        id: idCuenta
+      const cuentaConsultada = await sails.helpers.gestionCuentas.ConsultarCuenta.with({
+        idCuenta: idCuenta,
+        idLogin: usuarioLogueado
       })
 
       sails.log.verbose('Cuenta encontrada en la BD', cuentaConsultada);
