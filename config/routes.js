@@ -40,12 +40,23 @@ module.exports.routes = addGlobalPrefix({
   "POST /password/forgot": { controller: "auth", action: "forgot" },
   "POST /password/reset": { controller: "auth", action: "update" },
   "GET /cuentas": { controller: "gestion-cuentas", action: "listar-cuentas" },
-  "POST /cuentas/agregar": { controller: "gestion-cuentas", action: "crear-cuenta" },
-  "GET /cuentas/consultar": { controller: "gestion-cuentas", action: "consultar-cuenta" },
-  "PUT /cuentas/actualizar": { controller: "gestion-cuentas", action: "editar-cuenta" },
-  "GET /cuentas/cargar": { controller: "gestion-cuentas", action: "cargar-cuenta" },
+  "POST /cuentas/agregar": {
+    controller: "gestion-cuentas",
+    action: "crear-cuenta",
+  },
+  "GET /cuentas/consultar": {
+    controller: "gestion-cuentas",
+    action: "consultar-cuenta",
+  },
+  "PUT /cuentas/actualizar": {
+    controller: "gestion-cuentas",
+    action: "editar-cuenta",
+  },
+  "GET /cuentas/cargar": {
+    controller: "gestion-cuentas",
+    action: "cargar-cuenta",
+  },
   "GET /bancos": { controller: "gestion-bancos", action: "cargar-bancos" },
-
 
   /*   'GET /egresos': { action: 'gestion-egresos/listar-egresos' }, */
   /* 'DELETE /egresos/eliminar': { action: 'gestion-egresos/eliminar-egresos'}, */
@@ -54,6 +65,4 @@ module.exports.routes = addGlobalPrefix({
    * Rutas para manejo de cuentas
    *
    */
-
-
 });
