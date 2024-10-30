@@ -23,7 +23,7 @@ module.exports = {
 
       await Cuentas.getDatastore().transaction(async (db) => {
 
-        const validacion = await sails.helpers.gestionCuentas.ConsultarCuenta.with({
+        const validacion = await sails.helpers.gestionCuentas.consultarCuenta.with({
           idCuenta: datosCuenta.id,
           idLogin: usuarioLogueado
         })

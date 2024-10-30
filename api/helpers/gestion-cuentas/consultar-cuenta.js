@@ -19,8 +19,7 @@ module.exports = {
     },
   },
 
-  exits: {
-  },
+  exits: {},
 
   fn: async function ({ idCuenta, idLogin }) {
     sails.log.verbose('-----> Helper Consultar Cuenta');

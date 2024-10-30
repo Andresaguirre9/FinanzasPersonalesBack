@@ -33,7 +33,7 @@ module.exports = {
     },
     tipo_cuenta: {
       type: 'string',
-      isIn: ['debito', 'corriente', 'credito', 'nomina', 'cdt'],
+      isIn: ['Debito', 'Credito', 'Corriente', 'Nomina', 'Cdt'],
       required: true
     }
   },

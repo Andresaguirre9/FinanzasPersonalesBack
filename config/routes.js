@@ -40,6 +40,21 @@ module.exports.routes = addGlobalPrefix({
   "POST /password/forgot": { controller: "auth", action: "forgot" },
   "POST /password/reset": { controller: "auth", action: "update" },
   "GET /cuentas": { controller: "gestion-cuentas", action: "listar-cuentas" },
+
+  "GET /metas": { controller: "gestion-metas", action: "listar-metas" },
+  "POST /metas/agregar": {
+    controller: "gestion-metas",
+    action: "registrar-meta",
+  },
+  "GET /movimientos": {
+    controller: "gestion-movimientos",
+    action: "listar-movimientos",
+  },
+  "POST /movimientos/agregar": {
+    controller: "gestion-movimientos",
+    action: "registrar-movimiento",
+  },
+
   "POST /cuentas/agregar": {
     controller: "gestion-cuentas",
     action: "crear-cuenta",

@@ -1,11 +1,10 @@
 module.exports = {
-  friendlyName: 'Registrar movimiento',
-
-  description: 'Registrar un movimiento en la BD',
+  friendlyName: "Registrar movimiento",
+  description: "Registrar un movimiento en la BD",
 
   inputs: {
     datosMovimiento: {
-      type: 'ref',
+      type: "ref", // Idealmente, especifica el tipo exacto si es posible
       required: true,
     },
   },
@@ -13,76 +12,71 @@ module.exports = {
   exits: {},
 
   fn: async function ({ datosMovimiento }) {
-    sails.log.verbose('-----> Registrar movimiento');
-    sails.log.verbose('Movimiento a registrar', datosMovimiento);
+    sails.log.verbose("-----> Registrar movimiento");
 
     try {
+      const idUsuario = this.req.decoded.sub.id; // Se almacena para mejorar legibilidad
+      sails.log.verbose("Movimiento a registrar", datosMovimiento, idUsuario);
 
-      let validacionCuenta = await sails.helpers.gestionCuentas.ConsultarCuenta.with({
+      // Validar la cuenta del usuario
+      const validacionCuenta = await sails.helpers.gestionCuentas.consultarCuenta.with({
         idCuenta: datosMovimiento.id_cuenta,
-        idLogin: this.req.decoded.sub.id
-      })
+        idLogin: idUsuario,
+      });
 
       if (!validacionCuenta) {
-        throw new Error('La cuenta a la que le intenta visualizar los movimientos no le pertenece o no existe')
+        throw new Error("La cuenta no le pertenece o no existe.");
       }
 
-      datosMovimiento.fecha_movimiento = new Date()
+      const cuenta = validacionCuenta.ejecucion.datos.cuentaConsultada;
+      datosMovimiento.valor_movimiento = parseFloat(datosMovimiento.valor_movimiento);
 
-      if (datosMovimiento.tipo_movimiento === 'ingreso') {
 
-        validacionCuenta.saldo_actual += datosMovimiento.valor_movimiento
-        validacionCuenta.fecha_transaccion = new Date()
+      // Actualizar saldo según el tipo de movimiento
+      if (datosMovimiento.tipo_movimiento === "ingreso") {
+        cuenta.saldo_actual = parseFloat(cuenta.saldo_actual) + datosMovimiento.valor_movimiento;
+      } else if (datosMovimiento.tipo_movimiento === "egreso") {
+        cuenta.saldo_actual = parseFloat(cuenta.saldo_actual) - datosMovimiento.valor_movimiento;
 
-        await Cuentas.updateOne({
-          id: datosMovimiento.id_cuenta,
-        })
-          .set(validacionCuenta)
-          .usingConnection(db);
-
-      } else if (datosMovimiento.tipo_movimiento === 'egreso') {
-
-        validacionCuenta.saldo_actual -= datosMovimiento.valor_movimiento
-        validacionCuenta.fecha_transaccion = new Date()
-
-        if (validacionCuenta.saldo_actual < 0) {
-          throw new Error("Este movimiento no puede realizarse, el valor del movimiento supera el saldo de la cuenta")
+        if (cuenta.saldo_actual < 0) {
+          throw new Error("Saldo insuficiente para realizar este movimiento.");
         }
-
-        await Cuentas.updateOne({
-          id: datosMovimiento.id_cuenta,
-        })
-          .set(validacionCuenta)
-          .usingConnection(db);
-
       } else {
-        throw new Error("El tipo de movimiento no fue reconocido");
+        throw new Error("Tipo de movimiento no reconocido.");
       }
 
-      let registroMovimiento = {};
+      // Registrar la fecha de transacción
+      cuenta.fecha_transaccion = new Date();
+
+      // Actualizar la cuenta en la BD
+      await Cuentas.updateOne({ id: datosMovimiento.id_cuenta }).set(cuenta);
+
+      // Registrar el movimiento en una transacción para mayor seguridad
+      let registroMovimiento;
       await Movimientos.getDatastore().transaction(async (db) => {
         registroMovimiento = await Movimientos.create(datosMovimiento)
           .usingConnection(db)
           .fetch();
       });
 
-      sails.log.verbose('Movimiento ingresado en la BD', registroMovimiento);
+      sails.log.verbose("Movimiento registrado en la BD", registroMovimiento);
 
       return {
         ejecucion: {
           respuesta: {
-            estado: 'OK',
-            message: 'el movimiento se registro con exito',
+            estado: "OK",
+            message: "El movimiento se registró con éxito.",
           },
           datos: { registroMovimiento },
         },
       };
     } catch (error) {
-      sails.log.error('movimientos', error);
+      sails.log.error("Error al registrar movimiento:", error.message);
+
       return {
         ejecucion: {
           respuesta: {
-            estado: 'NOK',
+            estado: "NOK",
             message: error.message,
           },
           datos: {},
