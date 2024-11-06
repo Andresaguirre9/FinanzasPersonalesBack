@@ -50,6 +50,10 @@ module.exports.routes = addGlobalPrefix({
     controller: "gestion-movimientos",
     action: "listar-movimientos",
   },
+  "GET /movimientos/totalizar": {
+    controller: "gestion-movimientos",
+    action: "total-ingresos-egresos",
+  },
   "POST /movimientos/agregar": {
     controller: "gestion-movimientos",
     action: "registrar-movimiento",

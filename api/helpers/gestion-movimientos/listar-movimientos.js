@@ -1,5 +1,5 @@
 module.exports = {
-  friendlyName: 'listar Movimietnos',
+  friendlyName: 'listar Movimientos',
 
   description: '',
 
