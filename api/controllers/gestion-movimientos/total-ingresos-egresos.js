@@ -43,9 +43,10 @@ module.exports = {
       let totalIngresos = 0
 
       movimientosCuenta.forEach(movimiento => {
-        if (movimiento.tipo_movimiento === 'ingreso') {
+        console.log(movimiento,'consolemovimientoooooooo')
+        if (movimiento.tipo_movimiento === 'Egreso') {
           totalEgresos += movimiento.valor_movimiento
-        } else if (movimiento.tipo_movimiento === 'ingreso') {
+        } else if (movimiento.tipo_movimiento === 'Ingreso') {
           totalIngresos += movimiento.valor_movimiento
         } else {
           sails.log.info("Movimiento no reconocido")
