@@ -29,7 +29,7 @@ module.exports = {
       type: 'string',
       isIn: [
         'Utilidades', 'Ropa', 'Educación', 'Entretenimiento', 'Salud',
-        'Comida', 'Beleza', 'Casa', 'Transporte', 'Viajes',
+        'Comida', 'Belleza', 'Casa', 'Transporte', 'Viajes',
         'Mascotas', 'Otros',
       ],
       required: true,
