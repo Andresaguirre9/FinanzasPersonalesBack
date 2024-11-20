@@ -43,7 +43,6 @@ module.exports = {
       let totalIngresos = 0
 
       movimientosCuenta.forEach(movimiento => {
-        console.log(movimiento,'consolemovimientoooooooo')
         if (movimiento.tipo_movimiento === 'Egreso') {
           totalEgresos += movimiento.valor_movimiento
         } else if (movimiento.tipo_movimiento === 'Ingreso') {
