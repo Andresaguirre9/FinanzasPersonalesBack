@@ -9,6 +9,8 @@
     "@sailshq/lodash": "^3.10.6",
     "@sailshq/socket.io-redis": "^6.1.2",
     "bcrypt": "^5.1.1",
+    "exceljs": "^4.4.0",
+    "finanzas-personales-back": "file:",
     "grunt": "1.0.4",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
