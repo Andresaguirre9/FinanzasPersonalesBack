@@ -80,6 +80,8 @@ module.exports.routes = addGlobalPrefix({
     action: "generar-reporte-cuenta",
   },
   "GET /bancos": { controller: "gestion-bancos", action: "cargar-bancos" },
+  "GET /calcular-ingresos-egresos": { controller: "gestion-estadisticas", action: "calcular-ingresos-egresos" },
+  "GET /calcular-movimientos-mensuales": { controller: "gestion-estadisticas", action: "calcular-movimientos-mes" },
 
   /*   'GET /egresos': { action: 'gestion-egresos/listar-egresos' }, */
   /* 'DELETE /egresos/eliminar': { action: 'gestion-egresos/eliminar-egresos'}, */
