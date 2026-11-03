@@ -44,14 +44,18 @@ module.exports = {
           },
         },
       });
-
-      const ingresos = movimientos
-        .filter((mov) => mov.tipo_movimiento === "ingreso")
-        .reduce((acc, mov) => acc + mov.valor_movimiento, 0);
-
-      const egresos = movimientos
-        .filter((mov) => mov.tipo_movimiento === "egreso")
-        .reduce((acc, mov) => acc + mov.valor_movimiento, 0);
+      const { ingresos, egresos } = movimientos.reduce(
+        (acc, mov) => {
+          if (mov.tipo_movimiento === "Ingreso") {
+            acc.ingresos += mov.valor_movimiento;
+          } else if (mov.tipo_movimiento === "Egreso") {
+            acc.egresos += mov.valor_movimiento;
+          }
+          return acc;
+        },
+        { ingresos: 0, egresos: 0 } // Valores iniciales
+      );
+        console.log(ingresos, egresos,"INGRESOSSS EGRESOSSS")
 
       return {
         ejecucion: {
